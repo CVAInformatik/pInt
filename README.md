@@ -14,7 +14,7 @@
 *
 *      and the most significant (last) digit is non-zero.
 *
-*      that means that the sign of a non-zero pIntClass2 number is the sign of the
+*      that means that the sign of a non-zero pIntClass number is the sign of the
 *          value.back(), the last non-zero entry).
 *
 *	   Addition and Subtraction may temporarily make a value not normalized,
