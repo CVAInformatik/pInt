@@ -303,40 +303,40 @@ loop:
 
 
 
-pIntClass &modmult(const pIntClass &_a, const pIntClass &_b, const pIntClass &mod) {  // Compute a*b % mod
-    pIntClass* result = new pIntClass;
+pIntClass modmult(const pIntClass &_a, const pIntClass &_b, const pIntClass &mod) {  // Compute a*b % mod
+    pIntClass result;
     pIntClass a = _a;
     pIntClass b = _b;
     while (!b.IsZero()) {
 
         if ((b[0] & 1) == 1) {
-            *result += a;
-            *result = RemQuotient(*result, mod, NULL);
+            result += a;
+            result = RemQuotient(result, mod, NULL);
         }
         a = a + a;
         a = RemQuotient(a, mod, NULL);
         b >>= 1;
     }
-    return *result;
+    return result;
 }
 
-pIntClass& modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod) {  // Compute a^b % mod
-    pIntClass* result = new pIntClass();
+pIntClass modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod) {  // Compute a^b % mod
+    pIntClass result;
     pIntClass  a = _a;
     pIntClass  b = _b;
     pIntClass t;
-    ++(*result);
+    ++(result);
 
     while (!b.IsZero()) {
         if ((b[0] & 1) == 1) {
-            t = modmult(*result, a, mod);
-            *result = t;
+            t = modmult(result, a, mod);
+            result = t;
         }
         a = modmult(a, a, mod);
         b >>= 1;
     }
 
-    return *result;
+    return result;
 }
 
 void testMR1(int &npcount, int &pcount, int width,  pIntClass& p)

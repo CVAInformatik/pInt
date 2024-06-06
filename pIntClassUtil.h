@@ -10,8 +10,8 @@ If this is what you want to do, use the GNU Library General Public License inste
 */
 #include "pIntClass.h"
 
-pIntClass& modmult(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod);
-pIntClass& modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod);
+pIntClass modmult(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod);
+pIntClass modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod);
 
 
 pIntClass& exponentiation(int  a, int exp);
