@@ -24,3 +24,5 @@
   it comppiles in a Visual Studio 2022 x64 Console App project, define OS_WINDOWS and _CRT_SECURE_NO_WARNINGS for the entire project, compile for 'release' for speed.
   
   it compiles and run in WSL/Ubuntu with the attached makefile, the MRtest is killed after 300-400 iterations,   I suspect a leak, but otherwise it appears to work OK
+  
+ADDED: Looks like I have found most of the leaks, it now runs the full test to end without being killed...
