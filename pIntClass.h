@@ -17,6 +17,10 @@ If this is what you want to do, use the GNU Library General Public License inste
 
 */
 
+#include <iostream>
+
+
+
 #include <vector>
 #include <string>
 
@@ -48,7 +52,7 @@ typedef  int64_t  s64;
 *
 *      and the most significant digit is non-zero.
 *
-*      that means that the sign of a non-zero pIntClass2 number is the sign of the
+*      that means that the sign of a non-zero pIntClass number is the sign of the
 *          value.back(), the last non-zero entry).
 *
 *	   Addition and Subtraction may temporarily make a value not normalized,
@@ -75,10 +79,10 @@ public:
     static const int ReservationSize = 8;
     static const int MODULUS = 1000000000;
 
-    std::string& ToString();
+    std::string ToString();
 
     pIntClass& operator+=(const pIntClass& rhs);
-    pIntClass& operator*=(const pIntClass& rhs);
+    pIntClass operator*=(const pIntClass& rhs);
 
     pIntClass& operator-=(const pIntClass& rhs);
     pIntClass& operator=(const pIntClass& rhs);
@@ -87,7 +91,7 @@ public:
     pIntClass& operator*=(const int rhs);
 
     pIntClass& operator-=(const int rhs);
-    pIntClass& operator=(const int  rhs);
+    pIntClass  operator=(const int  rhs);
 
 
 
@@ -114,20 +118,21 @@ public:
     bool operator!=(const pIntClass& b);
     bool IsBiggerNummerically(const pIntClass& b);
 
-    friend pIntClass& operator+(pIntClass &a, const pIntClass &b);
-    friend pIntClass& operator*(pIntClass& a, const pIntClass& b);
+    friend pIntClass  operator+(const pIntClass &a, const pIntClass &b);
+    friend pIntClass  operator-(const pIntClass& a, const pIntClass& b);
+    friend pIntClass  operator*(const pIntClass& a, const pIntClass& b);
 
     friend bool operator<(const pIntClass& a, const pIntClass& b);
     friend bool operator==(const pIntClass& a, const pIntClass& b);
     friend bool operator!=(const pIntClass& a, const pIntClass& b);
 
-    friend pIntClass& operator+(const int a, const pIntClass &b);
-    friend pIntClass& operator-(const int a, const pIntClass& b);
-    friend pIntClass& operator*(const int a, const pIntClass &b);
+    friend pIntClass operator+(const int a, const pIntClass &b);
+    friend pIntClass operator-(const int a, const pIntClass& b);
+    friend pIntClass operator*(const int a, const pIntClass &b);
 
 
     friend int Jacobi(const pIntClass& a, const pIntClass& b);
-    friend pIntClass& RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass *Quotient);
+    friend pIntClass RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass *Quotient);
 
     friend class pIntClassRandom;
 
@@ -139,12 +144,12 @@ private:
     void DivModulus();
 
     /* schoolbook multiplication */
-    pIntClass& SchoolbookMultiplication(const pIntClass& rhs);
+    pIntClass SchoolbookMultiplication(const pIntClass& rhs);
     //pIntClass& KaratsubaMultiplication(const pIntClass& rhs);
 
 
 #ifdef SSLIMIT
-    pIntClass& SchoenhageStrassenMultiplication(const pIntClass& rhs);
+    pIntClass SchoenhageStrassenMultiplication(const pIntClass& rhs);
 
     void LoadFFT(const std::vector<int> &A, double* Buffer);
     void Carry(s64 size, double* Buffer);

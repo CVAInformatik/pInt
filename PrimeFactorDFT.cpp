@@ -100,8 +100,14 @@ void PrimeFactorDFT::InitDFT(factorSeq& _factors, std::vector<BasicDFT*> &_DFTs)
 
 }
 
-void PrimeFactorDFT::CleanUpDFT( std::vector<BasicDFT*> &_DTFs)
-{}
+void PrimeFactorDFT::CleanUpDFT( std::vector<BasicDFT*> &_DFTs)
+{
+    while (_DFTs.size()) {
+        delete _DFTs.back();
+        _DFTs.pop_back();
+    }
+    //(void)_DTFs;
+}
 
 void PrimeFactorDFT::forwardFFT(Data* real, Data *imag)
 {
@@ -133,6 +139,7 @@ void PrimeFactorDFT::ScaledInverseFFT(Data* real, Data *imag)
 
 int PrimeFactorDFT::FindFactors(uint length, uint start, uint end, uint* LengthTable)
 {
+    (void)start;
     for(uint i = 0; i < end; i++)
         if(LengthTable[i] > length) return LengthTable[i];
     return 0;

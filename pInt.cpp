@@ -156,7 +156,7 @@ void testpIntClass2(){
     std::cout << "23 a1: " << a1.ToString() << std::endl;
     b1 = a + a1 ;
     std::cout << "24 b1: " << b1.ToString() << std::endl;
-    b1 = b1 + b1 + 7 + 10;
+    b1 = b1 + b1 +  7 + 10;
     std::cout << "25 b1: " << b1.ToString() << std::endl;
 
 }
@@ -183,14 +183,52 @@ void testExponentiation()
 
 }
 
+#define TESTLENGTH 100
+void testLeaks()
+{
+    pIntClass* A = new pIntClass();
+
+    for (int i = 0; i < TESTLENGTH; i++)
+    {
+        delete A;
+        A = new pIntClass();
+        *A = 100;
+        std::string s;
+        s = A->ToString();
+        ++(*A);
+        std::cout << "A " << A->ToString() << std::endl;
+    }
+    for (int i = 0; i < TESTLENGTH; i++)
+    {
+        delete A;
+        A = new pIntClass();
+        *A = (*A) + 7;
+        *A *= 100;
+        *A = (*A) * 100;
+        std::string s;
+        s = A->ToString();
+        std::cout << "A " << A->ToString() << std::endl;
+    }
+
+    delete A;
+}
+
+
+
+
 int main()
 {
+
+
+    testLeaks();
+    testMR();
+    testExponentiation();
     testSubtraction();
     testAddition();
     testMultiplication();
-    testMR();
     testModMult();
     testTonelliShanks();
-    testpIntClass2();
-    testExponentiation();
+
+
+
 }

@@ -49,18 +49,19 @@ pIntClass::pIntClass(const std::string& x)
 
 }
 
-std::string& pIntClass::ToString()
+std::string pIntClass::ToString()
 {
 #define FORMATSTRING "%09d"
 #define DIGITS 9
 
-	char buffer[12];
-	std::string* s = new std::string();
 	if (value.size() == 0) {
+		std::string* s = new std::string();
 		s->append("0");
 		return *s;
 	}
 	else {
+		char buffer[12];
+		std::string s;// = new std::string();
 		int sign = value.back();
 
 		for (int i = 0; i < value.size(); i++) {
@@ -74,14 +75,14 @@ std::string& pIntClass::ToString()
 				*c2 = t;
 				c1++; c2--;
 			}
-			s->append(buffer);
+			s.append(buffer);
 		}
-		while (s->size() && (s->back() == '0')) s->pop_back();
-		if (s->size() == 0) 
-			s->append("0");
+		while (s.size() && (s.back() == '0')) s.pop_back();
+		if (s.size() == 0) 
+			s.append("0");
 		else 
-		    if (sign < 0)  s->append("-");
-		std::reverse(s->begin(), s->end());
-		return *s;
+		    if (sign < 0)  s.append("-");
+		std::reverse(s.begin(), s.end());
+		return s;
 	}
 }

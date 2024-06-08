@@ -14,7 +14,7 @@ pIntClass modmult(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod
 pIntClass modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod);
 
 
-pIntClass& exponentiation(int  a, int exp);
+pIntClass exponentiation(int  a, int exp);
 
 bool MillerRabin(const pIntClass& number,  int witnesses);
 

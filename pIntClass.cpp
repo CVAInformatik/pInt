@@ -41,7 +41,7 @@ pIntClass::pIntClass(const int x)
 	value.clear();
 	value.reserve(ReservationSize);
 	if (x < 0) _x = -_x;
-	for (int i = 0; _x; _x = _x / MODULUS) {
+	for (; _x; _x = _x / MODULUS) {
 		if (x < 0)
 			value.push_back(-(_x % MODULUS));
 		else
@@ -147,7 +147,7 @@ pIntClass& pIntClass::operator=(const pIntClass& rhs)
 }
 
 
-pIntClass& pIntClass::operator=(const int  rhs)
+pIntClass pIntClass::operator=(const int  rhs)
 {
 	value.clear();
 	s64 tmp = 0;

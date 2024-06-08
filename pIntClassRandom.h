@@ -22,7 +22,7 @@ public:
 
 	void SetSeed(const pIntClass& seed);
 
-	pIntClass& Rand();
+	pIntClass Rand();
 	void Rand(pIntClass& res);
 
 private:

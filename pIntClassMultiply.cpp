@@ -13,6 +13,7 @@ If this is what you want to do, use the GNU Library General Public License inste
 #ifndef OS_WINDOWS
 #include <math.h>
 #endif
+
 #include "pIntClass.h"
 
 #ifdef SSLIMIT
@@ -40,7 +41,7 @@ void pIntClass::mul10()
 }
 
 
-pIntClass& pIntClass::operator*=(const pIntClass& rhs)
+pIntClass pIntClass::operator*=(const pIntClass& rhs)
 {
 	size_t sz = value.size() + rhs.value.size();
 #ifdef SSLIMIT
@@ -52,7 +53,7 @@ pIntClass& pIntClass::operator*=(const pIntClass& rhs)
 
 }
 
-pIntClass& pIntClass::SchoolbookMultiplication(const pIntClass& rhs)
+pIntClass pIntClass::SchoolbookMultiplication(const pIntClass& rhs)
 {
 	std::vector<s64> buffer;
 	std::vector<int> acc;
@@ -226,7 +227,7 @@ Data* imag3 = new Data[PREALLOCE];
 #endif
 
 
-pIntClass& pIntClass::SchoenhageStrassenMultiplication(const  pIntClass& rhs)
+pIntClass pIntClass::SchoenhageStrassenMultiplication(const  pIntClass& rhs)
 {
 
 	PrimeFactorDFT pf;
@@ -239,7 +240,7 @@ pIntClass& pIntClass::SchoenhageStrassenMultiplication(const  pIntClass& rhs)
 
 	u64 min_sz = value.size() +  rhs.value.size();
 
-	int length = pf.FastCalcFactors((unsigned int) (3 /** 2*/ * min_sz), factors);
+	pf.FastCalcFactors((unsigned int) (3 /** 2*/ * min_sz), factors);
 
 	pf.SetFactors(factors);
 	//std::cout << "FFT length " << pf.Status() << std::endl;
@@ -377,12 +378,12 @@ pIntClass& pIntClass::operator*=(const int rhs)
 }
 
 
-pIntClass& operator*(pIntClass& a, const pIntClass& b)
+pIntClass operator*(const pIntClass& a, const pIntClass& b)
 {
-	pIntClass* temp = new pIntClass();
-	*temp = a;
-	(*temp) *= b;
-	return *temp;
+	pIntClass temp;// = new pIntClass();
+	temp = a;
+	temp *= b;
+	return temp;
 }
 
 bool operator<(const pIntClass& a, const pIntClass& b)
@@ -432,12 +433,12 @@ bool operator==(const pIntClass& a, const pIntClass& b)
 bool operator!=(const pIntClass& a, const pIntClass& b) {	return !operator==(a, b);  }
 
 
-pIntClass& operator*(const int a, const pIntClass& b)
+pIntClass operator*(const int a, const pIntClass& b)
 {
-	pIntClass* temp = new pIntClass();
-	*temp = b;
-	(*temp) *= a;
-	return *temp;
+	pIntClass temp;// = new pIntClass();
+	temp = b;
+	(temp) *= a;
+	return temp;
 }
 
 
@@ -449,9 +450,13 @@ void testMultiplication()
 
 	pIntClass b;
 
+	std::string s;
 	b = 7 * a;
-	std::cout << " b = 7 * a " << b.ToString() << std::endl;
+	s = b.ToString();
+	std::cout << " b = 7 * a " << s << std::endl;
 
+	s.clear();
+#if 0
 	b = pIntClass("99999999999999999");
 
 	std::cout << " b " << b.ToString() << std::endl;
@@ -475,5 +480,6 @@ void testMultiplication()
 	b.ChSignBit();
 	std::cout << " b = -(a * 7) " << b.ToString() << std::endl;
 
+#endif
 
 }

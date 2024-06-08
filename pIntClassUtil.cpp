@@ -23,18 +23,18 @@ If this is what you want to do, use the GNU Library General Public License inste
 #include "pIntClassUtil.h"
 
 
-pIntClass& exponentiation(int  a, int exp)
+pIntClass exponentiation(int  a, int exp)
 {
-    pIntClass* res = new pIntClass();
+    pIntClass res;// = new pIntClass();
 
     unsigned int  mask = exp >> 1;
     if (exp == 0)
     {
-        *res = 1;
+        res = 1;
     }
     else if (mask == 0) // exponent == 1
     {
-        *res = a;
+        res = a;
     }
     else {
         mask |= mask >> 1;
@@ -44,27 +44,27 @@ pIntClass& exponentiation(int  a, int exp)
         mask |= mask >> 16;
         mask++;  // mask is now a single 1 at the postion of the leftmost 1 in exp
         mask = mask >> 1;
-        *res = a;
+        res = a;
         do {
-            *res *= *res;
+            res *= res;
             if (exp & mask)
-                *res *= a;
+                res *= a;
             mask = mask >> 1;
         } while (mask);
     }
-    return *res;
+    return res;
 }
 
 
-pIntClass& RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass* Quotient)
+pIntClass RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass* Quotient)
 {
 	pIntClass  _Quotient;
-	pIntClass* Rem = new pIntClass();
-	int counter = 0;
+    pIntClass Rem;// = new pIntClass();
+	//int counter = 0;
 
 	if (M.IsZero()) {
 		std::cout << "divison by zero" << std::endl;
-		return *Rem;
+		return Rem;
 	}
 	else if ((A.value.size() == 1) && (M.value.size() == 1)) {
 		/* small numbers both less than RMOD */
@@ -74,9 +74,9 @@ pIntClass& RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass* Quotie
 			Quotient->value.push_back(A.value[0] / M.value[0]);
 		}
 
-		Rem->value.push_back( A.value[0] % M.value[0]);
-        Rem->normalize(Rem->value);
-		return *Rem;
+		Rem.value.push_back( A.value[0] % M.value[0]);
+        Rem.normalize(Rem.value);
+		return Rem;
 	}
 	else {
         pIntClass  _dividend(A);
@@ -85,38 +85,38 @@ pIntClass& RemQuotient(const pIntClass& A, const pIntClass& M, pIntClass* Quotie
         int     shift = (int)M.value.size();
 		pIntClass  _reciprocal(reciprocal);
 
-        *Rem = reciprocal;
-		*Rem *= _dividend;
+        Rem = reciprocal;
+		Rem *= _dividend;
 
-		if (!Rem->IsZero())  
-            for (int i = 0; i < shift;i++)	Rem->DivModulus();
+		if (!Rem.IsZero())  
+            for (int i = 0; i < shift;i++)	Rem.DivModulus();
 
 		while (1)
 		{
-			_Quotient = *Rem;
-			*Rem *= _divisor;
-            Rem->ChSignBit();
-			*Rem += _dividend;
+			_Quotient = Rem;
+			Rem *= _divisor;
+            Rem.ChSignBit();
+			Rem += _dividend;
 
-			if (_divisor.IsBiggerNummerically(*Rem)) 	
+			if (_divisor.IsBiggerNummerically(Rem)) 	
                 break;
 
-			*Rem *= _reciprocal;
+			Rem *= _reciprocal;
 			for (int i = 0; i < shift;i++) {
-				Rem->DivModulus();
+				Rem.DivModulus();
 			}
-			if (Rem->IsZero())
-				*Rem = 1;
-			*Rem += _Quotient;
+			if (Rem.IsZero())
+				Rem = 1;
+			Rem += _Quotient;
 		}
 		/* we are done */
-		if (Rem->IsNeg())
+		if (Rem.IsNeg())
 		{
-			*Rem += _divisor;
+			Rem += _divisor;
 			_Quotient += -1;
 		}
 		if (Quotient)  *Quotient = _Quotient;
-		return *Rem;
+		return Rem;
 	}
 }
 
@@ -174,7 +174,7 @@ void testTonelliShanks()
 #endif
 
     pIntClass  P("26959946667150639794667015087019630673557916260026308143510066298881");
-    pIntClass  A("18958286285566608000408668544493926415504680968679321075787234672564");
+    //pIntClass  A("18958286285566608000408668544493926415504680968679321075787234672564");
     pIntClass  Res;
 #define P224 1
 #if P224
@@ -214,10 +214,10 @@ void testTonelliShanks()
 
 bool  TonelliShanks(const pIntClass& n, const pIntClass& p, pIntClass& res) {
 
-	pIntClass* Res = new pIntClass();
+    pIntClass Res;// = new pIntClass();
 	if (Jacobi(n, p) != 1) {
-		*Res = 0;
-		res = *Res;
+		Res = 0;
+		res = Res;
 		return false;
 	}
 
@@ -304,7 +304,7 @@ loop:
 
 
 pIntClass modmult(const pIntClass &_a, const pIntClass &_b, const pIntClass &mod) {  // Compute a*b % mod
-    pIntClass result;
+    pIntClass result;// = new pIntClass;
     pIntClass a = _a;
     pIntClass b = _b;
     while (!b.IsZero()) {
@@ -321,7 +321,7 @@ pIntClass modmult(const pIntClass &_a, const pIntClass &_b, const pIntClass &mod
 }
 
 pIntClass modpow(const pIntClass& _a, const pIntClass& _b, const pIntClass& mod) {  // Compute a^b % mod
-    pIntClass result;
+    pIntClass result;// = new pIntClass();
     pIntClass  a = _a;
     pIntClass  b = _b;
     pIntClass t;
@@ -378,10 +378,10 @@ void testMR()
     pIntClass prime1("5127821565631733");
 
 
-    pIntClass prime2("2147483647");
+   pIntClass prime2("2147483647");
 #define WIDTH 75
     int np = 0, p = 0;
-    testMR1(np, p, WIDTH, prime);
+    testMR1(np, p, WIDTH, prime2);
     testMR1(np, p, WIDTH, prime1);
     testMR1(np, p, WIDTH, prime2);
 
@@ -430,7 +430,6 @@ bool MillerRabin(const pIntClass& number, int witnesses)
         d -= 1;
         
         int s = 0;
-
         while (!d.IsZero() && ((d[0] & 1) == 0)) {
             d >>= 1;
             s++;
@@ -442,7 +441,6 @@ bool MillerRabin(const pIntClass& number, int witnesses)
             a += 2;
 
             //std::cout << "a: " << a.ToString() << std::endl;
-
             pIntClass x = modpow(a, d, m);
 
             for (int i = 0; i < s; i++) {

@@ -36,16 +36,28 @@ void pIntClassRandom::SetSeed(const pIntClass& seed) {
 
 
 }
+//
+//pIntClass& pIntClassRandom::Rand() {
+//
+//	pIntClass* res = new pIntClass();
+//
+//	Rand(*res);
+//
+//	return *res;
+//
+//}
 
-pIntClass& pIntClassRandom::Rand() {
 
-	pIntClass* res = new pIntClass();
+pIntClass pIntClassRandom::Rand() {
 
-	Rand(*res);
+	pIntClass res;// = new pIntClass();
 
-	return *res;
+	Rand(res);
+
+	return res;
 
 }
+
 
 void pIntClassRandom::Rand(pIntClass& res) {
 

@@ -60,37 +60,37 @@ pIntClass& pIntClass::operator+=(const int rhs)
 }
 
 
-pIntClass& operator+(pIntClass& a, const pIntClass& b)
+pIntClass operator+(const pIntClass& a, const pIntClass& b)
 {
-	pIntClass* t = new pIntClass();
-	*t = a;
-	*t += b;
-	return *t;
+	pIntClass t;
+	t = a;
+	t += b;
+	return t;
 }
 
-pIntClass& operator-(pIntClass& a, const pIntClass& b)
+pIntClass operator-(pIntClass& a, const pIntClass& b)
 {
-	pIntClass* t = new pIntClass();
-	*t = a;
-	*t -= b;
-	return *t;
+	pIntClass t;
+	t = a;
+	t -= b;
+	return t;
 }
 
 
-pIntClass& operator+(const int a, const pIntClass& b)
+pIntClass operator+(const int a, const pIntClass& b)
 {
-	pIntClass* t = new pIntClass();
-	*t = a;
-	*t += b;
-	return *t;
+	pIntClass t;// = new pIntClass();
+	t = a;
+	t += b;
+	return t;
 }
 
-pIntClass& operator-(const int a, const pIntClass& b)
+pIntClass operator-(const int a, const pIntClass& b)
 {
-	pIntClass* t = new pIntClass();
-	*t = a;
-	*t -= b;
-	return *t;
+	pIntClass t;// = new pIntClass();
+	t = a;
+	t -= b;
+	return t;
 }
 
 void testAddition()
