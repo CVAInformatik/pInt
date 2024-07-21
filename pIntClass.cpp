@@ -42,11 +42,7 @@ pIntClass::pIntClass(const int x)
 	value.reserve(ReservationSize);
 	if (x < 0) _x = -_x;
 	for (; _x; _x = _x / MODULUS) {
-		if (x < 0)
-			value.push_back(-(_x % MODULUS));
-		else
 			value.push_back(_x % MODULUS);
-
 	}
 	if (x < 0)
 		for (size_t ix = 0; ix < value.size();ix++)
